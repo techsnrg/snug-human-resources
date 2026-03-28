@@ -1,7 +1,7 @@
 {
  "category": "Modules",
  "charts": [],
- "content": "[{\"id\":\"apc_header_1\",\"type\":\"header\",\"data\":{\"text\":\"Attendance Import Control\",\"col\":12}},{\"id\":\"apc_shortcut_1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Upload Control\",\"col\":3}},{\"id\":\"apc_shortcut_2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Import Batch\",\"col\":3}},{\"id\":\"apc_shortcut_3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Control Settings\",\"col\":3}},{\"id\":\"apc_header_2\",\"type\":\"header\",\"data\":{\"text\":\"Attendance Exceptions\",\"col\":12}},{\"id\":\"apc_shortcut_4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Violation Log\",\"col\":3}},{\"id\":\"apc_shortcut_5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Correction Request\",\"col\":3}}]",
+ "content": "[{\"id\":\"apc_header_1\",\"type\":\"header\",\"data\":{\"text\":\"Attendance Import Control\",\"col\":12}},{\"id\":\"apc_shortcut_1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Upload Control\",\"col\":3}},{\"id\":\"apc_shortcut_2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Import Batch\",\"col\":3}},{\"id\":\"apc_shortcut_3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Control Settings\",\"col\":3}},{\"id\":\"apc_header_2\",\"type\":\"header\",\"data\":{\"text\":\"Attendance Exceptions\",\"col\":12}},{\"id\":\"apc_shortcut_4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Violation Log\",\"col\":3}},{\"id\":\"apc_shortcut_5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Correction Request\",\"col\":3}},{\"id\":\"apc_header_3\",\"type\":\"header\",\"data\":{\"text\":\"Reports\",\"col\":12}},{\"id\":\"apc_shortcut_6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payroll Readiness\",\"col\":3}},{\"id\":\"apc_shortcut_7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Manager Team Attendance\",\"col\":3}}]",
  "creation": "2026-03-29 10:00:00.000000",
  "developer_mode_only": 0,
  "disable_user_customization": 0,
@@ -86,6 +86,37 @@
    "link_type": "DocType",
    "onboard": 1,
    "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Payroll Readiness",
+   "link_count": 0,
+   "link_to": "Payroll Readiness",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Manager Team Attendance",
+   "link_count": 0,
+   "link_to": "Manager Team Attendance",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
  "modified": "2026-03-29 10:00:00.000000",
@@ -126,6 +157,18 @@
    "label": "Attendance Correction Request",
    "link_to": "Attendance Correction Request",
    "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "label": "Payroll Readiness",
+   "link_to": "Payroll Readiness",
+   "type": "Report"
+  },
+  {
+   "color": "Dark Grey",
+   "label": "Manager Team Attendance",
+   "link_to": "Manager Team Attendance",
+   "type": "Report"
   }
  ],
  "title": "Attendance & Payroll Control"

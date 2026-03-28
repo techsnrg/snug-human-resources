@@ -1,5 +1,5 @@
 from collections import defaultdict
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 
 import frappe
 from frappe import _
@@ -126,15 +126,16 @@ class AttendancePolicyEngine:
 		return results
 
 	def _evaluate_day(self, employee, attendance_date, checkins, late_count_used, short_hours_count_used):
+		shift_context = self._get_shift_context(employee, attendance_date)
 		first_in = get_datetime(checkins[0].time)
 		last_out = get_datetime(checkins[-1].time)
 		missing_punch_warning = len(checkins) == 1
 		if missing_punch_warning:
-			last_out = datetime.combine(attendance_date, time(19, 0))
+			last_out = shift_context["assumed_end_datetime"]
 
 		working_hours = max((last_out - first_in).total_seconds() / 3600, 0)
 		first_in_time = first_in.time()
-		late_minutes = self._minutes_late(first_in_time)
+		late_minutes = self._minutes_late(first_in_time, shift_context["late_start_time"])
 		shortfall_minutes = max(int((self.required_hours - working_hours) * 60), 0)
 
 		final_status = "Present"
@@ -146,7 +147,7 @@ class AttendancePolicyEngine:
 		if first_in_time > self.late_cutoff_time:
 			final_status = "Half Day"
 			violation_types.append("After 11 AM Half Day")
-		elif first_in_time > self.late_start_time:
+		elif first_in_time > shift_context["late_start_time"]:
 			late_flag = True
 			late_occurrence = late_count_used + 1
 			if late_occurrence > self.allowed_late_count:
@@ -181,6 +182,7 @@ class AttendancePolicyEngine:
 			"working_hours": round(working_hours, 2),
 			"late_minutes": late_minutes,
 			"shortfall_minutes": shortfall_minutes,
+			"shift_start": shift_context["shift_start_time"],
 			"late_flag": late_flag,
 			"short_hours_flag": short_hours_flag,
 			"short_hours_grace_used": short_hours_grace_used,
@@ -259,6 +261,7 @@ class AttendancePolicyEngine:
 			doc.working_hours = evaluation["working_hours"]
 			doc.late_minutes = evaluation["late_minutes"]
 			doc.shortfall_minutes = evaluation["shortfall_minutes"]
+			doc.shift_start = evaluation.get("shift_start")
 			doc.violation_type = violation_type
 			doc.final_attendance_status = evaluation["final_status"]
 			doc.payroll_impact = self._payroll_impact_note(evaluation["final_status"], violation_type)
@@ -269,13 +272,68 @@ class AttendancePolicyEngine:
 			return _("Counts as 0.5 attendance day due to {0}.").format(violation_type)
 		return _("No deduction by default; monitor policy usage.")
 
-	def _minutes_late(self, first_in_time):
-		if first_in_time <= self.late_start_time:
+	def _minutes_late(self, first_in_time, late_start_time):
+		if first_in_time <= late_start_time:
 			return 0
 
-		start_dt = datetime.combine(datetime.today(), self.late_start_time)
+		start_dt = datetime.combine(datetime.today(), late_start_time)
 		first_dt = datetime.combine(datetime.today(), first_in_time)
 		return int((first_dt - start_dt).total_seconds() / 60)
+
+	def _get_shift_context(self, employee, attendance_date):
+		shift_assignment = self._get_shift_assignment(employee, attendance_date)
+		shift_start_time = time(10, 0)
+		shift_end_time = time(19, 0)
+
+		if shift_assignment and shift_assignment.get("shift_type"):
+			shift_type = frappe.db.get_value(
+				"Shift Type",
+				shift_assignment["shift_type"],
+				["start_time", "end_time"],
+				as_dict=True,
+			)
+			if shift_type:
+				shift_start_time = get_time(shift_type.start_time or shift_start_time)
+				shift_end_time = get_time(shift_type.end_time or shift_end_time)
+
+		assumed_end_datetime = datetime.combine(attendance_date, shift_end_time)
+		if shift_end_time <= shift_start_time:
+			assumed_end_datetime = assumed_end_datetime + timedelta(days=1)
+
+		late_start_time = self._apply_time_offset(shift_start_time, minutes=30)
+		late_cutoff_time = self._apply_time_offset(shift_start_time, minutes=60)
+
+		return {
+			"shift_assignment": shift_assignment,
+			"shift_start_time": shift_start_time,
+			"shift_end_time": shift_end_time,
+			"late_start_time": late_start_time,
+			"late_cutoff_time": late_cutoff_time,
+			"assumed_end_datetime": assumed_end_datetime,
+		}
+
+	def _get_shift_assignment(self, employee, attendance_date):
+		if not frappe.db.exists("DocType", "Shift Assignment"):
+			return None
+
+		assignments = frappe.get_all(
+			"Shift Assignment",
+			filters={
+				"employee": employee,
+				"start_date": ["<=", attendance_date],
+				"docstatus": 1,
+			},
+			fields=["name", "shift_type", "start_date", "end_date"],
+			order_by="start_date desc",
+		)
+		for assignment in assignments:
+			if not assignment.end_date or assignment.end_date >= attendance_date:
+				return assignment
+		return None
+
+	def _apply_time_offset(self, base_time, minutes):
+		base_datetime = datetime.combine(datetime.today(), base_time)
+		return (base_datetime + timedelta(minutes=minutes)).time()
 
 	def _load_settings(self):
 		if not frappe.db.exists("DocType", "Attendance Control Settings"):

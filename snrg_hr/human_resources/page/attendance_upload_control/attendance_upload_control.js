@@ -15,6 +15,10 @@ frappe.pages["attendance-upload-control"].on_page_load = function (wrapper) {
 	page.add_button(__("Upload File"), () => uploadFile(), "Actions");
 	page.add_button(__("Create Import Batch"), () => createImportBatch(), "Actions");
 	page.add_button(__("Process Import Batch"), () => processImportBatch(), "Actions");
+	page.add_button(__("Weekly Summary"), () => promptWeeklySummary("preview"), "Actions");
+	page.add_button(__("Send Weekly Emails"), () => promptWeeklySummary("send"), "Actions");
+	page.add_button(__("Payroll Readiness"), () => promptPayrollReadiness(), "Actions");
+	page.add_button(__("Finalize Attendance"), () => promptFinalizeAttendance(), "Actions");
 	page.add_button(__("Refresh Summary"), () => loadDashboard(), "Actions");
 
 	const $body = $(page.body);
@@ -249,6 +253,139 @@ frappe.pages["attendance-upload-control"].on_page_load = function (wrapper) {
 					indicator: "green",
 				});
 				loadDashboard();
+			},
+		});
+	}
+
+	function promptPayrollReadiness() {
+		frappe.prompt(
+			[
+				{ fieldname: "start_date", fieldtype: "Date", label: __("Start Date"), reqd: 1 },
+				{ fieldname: "end_date", fieldtype: "Date", label: __("End Date"), reqd: 1 },
+			],
+			(values) => fetchPayrollReadiness(values),
+			__("Payroll Readiness"),
+			__("Check")
+		);
+	}
+
+	function fetchPayrollReadiness(values) {
+		frappe.call({
+			method: "snrg_hr.api.payroll_control.get_payroll_readiness",
+			args: values,
+			freeze: true,
+			freeze_message: __("Checking payroll readiness..."),
+			callback(r) {
+				const data = r.message || {};
+				const issues = (data.issues || [])
+					.map((item) => `<li>${frappe.utils.escape_html(item)}</li>`)
+					.join("");
+				$preview.html(`
+					<div class="form-message ${data.ready ? "green" : "orange"}">
+						<strong>${data.ready ? __("Payroll is ready") : __("Payroll is not ready")}</strong>
+					</div>
+					<p><strong>Period:</strong> ${frappe.utils.escape_html(data.start_date || "")} to ${frappe.utils.escape_html(data.end_date || "")}</p>
+					<p><strong>Pending from date:</strong> ${frappe.utils.escape_html(data.pending_from_date || __("Not set"))}</p>
+					<p><strong>Unresolved corrections:</strong> ${data.unresolved_corrections || 0}</p>
+					<p><strong>Missing biometric codes:</strong> ${data.missing_biometric_codes || 0}</p>
+					<p><strong>Attendance rows:</strong> ${data.attendance_rows || 0}</p>
+					${issues ? `<ul>${issues}</ul>` : ""}
+				`);
+			},
+		});
+	}
+
+	function promptFinalizeAttendance() {
+		frappe.prompt(
+			[
+				{ fieldname: "start_date", fieldtype: "Date", label: __("Start Date"), reqd: 1 },
+				{ fieldname: "end_date", fieldtype: "Date", label: __("End Date"), reqd: 1 },
+			],
+			(values) => finalizeAttendance(values),
+			__("Finalize Attendance"),
+			__("Finalize")
+		);
+	}
+
+	function finalizeAttendance(values) {
+		frappe.call({
+			method: "snrg_hr.api.payroll_control.finalize_attendance",
+			args: values,
+			freeze: true,
+			freeze_message: __("Locking attendance for payroll period..."),
+			callback(r) {
+				const data = r.message || {};
+				frappe.show_alert({
+					message: data.message || __("Attendance finalized."),
+					indicator: "green",
+				});
+				loadDashboard();
+			},
+		});
+	}
+
+	function promptWeeklySummary(mode) {
+		frappe.prompt(
+			[
+				{ fieldname: "start_date", fieldtype: "Date", label: __("Start Date"), reqd: 1 },
+				{ fieldname: "end_date", fieldtype: "Date", label: __("End Date"), reqd: 1 },
+			],
+			(values) => handleWeeklySummary(mode, values),
+			__(mode === "send" ? "Send Weekly Summary Emails" : "Preview Weekly Summary"),
+			__(mode === "send" ? "Send" : "Preview")
+		);
+	}
+
+	function handleWeeklySummary(mode, values) {
+		frappe.call({
+			method:
+				mode === "send"
+					? "snrg_hr.api.attendance_notifications.send_weekly_summary"
+					: "snrg_hr.api.attendance_notifications.preview_weekly_summary",
+			args: values,
+			freeze: true,
+			freeze_message:
+				mode === "send"
+					? __("Sending weekly attendance emails...")
+					: __("Building weekly attendance summary..."),
+			callback(r) {
+				const data = r.message || {};
+				if (mode === "send") {
+					frappe.show_alert({
+						message: __(
+							"Weekly emails sent: Employees {0}, Managers {1}, HR {2}",
+							[
+								data.employee_emails_sent || 0,
+								data.manager_emails_sent || 0,
+								data.hr_emails_sent || 0,
+							]
+						),
+						indicator: "green",
+					});
+					return;
+				}
+
+				const hr = data.hr_summary || {};
+				const employeeCount = (data.employee_summaries || []).length;
+				const managerCount = (data.manager_summaries || []).length;
+				const issues = [
+					__("Employee summaries: {0}", [employeeCount]),
+					__("Manager summaries: {0}", [managerCount]),
+					__("Pending from date: {0}", [hr.pending_from_date || __("Not set")]),
+					__("Unresolved corrections: {0}", [hr.unresolved_corrections || 0]),
+					__("Missing punch cases: {0}", [hr.missing_punch_cases || 0]),
+					__("Half day conversions: {0}", [hr.half_day_conversions || 0]),
+				]
+					.map((item) => `<li>${frappe.utils.escape_html(item)}</li>`)
+					.join("");
+
+				$preview.html(`
+					<div class="form-message blue">
+						<strong>${__("Weekly summary preview ready")}</strong>
+					</div>
+					<p><strong>Period:</strong> ${frappe.utils.escape_html(data.start_date || "")} to ${frappe.utils.escape_html(data.end_date || "")}</p>
+					<ul>${issues}</ul>
+				`);
 			},
 		});
 	}

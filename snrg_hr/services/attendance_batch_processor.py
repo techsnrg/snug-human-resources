@@ -72,6 +72,13 @@ class AttendanceBatchProcessor:
 			if self._has_field("Employee Checkin", "skip_auto_attendance"):
 				doc.skip_auto_attendance = 1
 
+			if self._has_field("Employee Checkin", "custom_import_batch"):
+				doc.custom_import_batch = batch.name
+			if self._has_field("Employee Checkin", "custom_source_file_name"):
+				doc.custom_source_file_name = batch.source_file_name
+			if self._has_field("Employee Checkin", "custom_source_row_number"):
+				doc.custom_source_row_number = row["row_number"]
+
 			doc.insert(ignore_permissions=True)
 			created_checkins += 1
 			affected[employee].add(attendance_date)
