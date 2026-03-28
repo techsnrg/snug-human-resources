@@ -3,6 +3,7 @@ from frappe import _
 from frappe.utils import now_datetime
 
 from snrg_hr.services.attendance_import_preview import AttendanceImportPreviewService
+from snrg_hr.services.attendance_batch_processor import AttendanceBatchProcessor
 
 
 @frappe.whitelist()
@@ -63,3 +64,12 @@ def create_import_batch(file_url: str):
 		"processing_status": batch.processing_status,
 		"source_file_name": batch.source_file_name,
 	}
+
+
+@frappe.whitelist()
+def process_import_batch(batch_name: str):
+	if not batch_name:
+		frappe.throw(_("Please select an import batch to process."))
+
+	processor = AttendanceBatchProcessor()
+	return processor.process_batch(batch_name)

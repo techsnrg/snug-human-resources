@@ -8,11 +8,13 @@ frappe.pages["attendance-upload-control"].on_page_load = function (wrapper) {
 	const state = {
 		file: null,
 		preview: null,
+		batch: null,
 	};
 
 	page.set_primary_action(__("Preview Import"), () => previewImport(), "search");
 	page.add_button(__("Upload File"), () => uploadFile(), "Actions");
 	page.add_button(__("Create Import Batch"), () => createImportBatch(), "Actions");
+	page.add_button(__("Process Import Batch"), () => processImportBatch(), "Actions");
 	page.add_button(__("Refresh Summary"), () => loadDashboard(), "Actions");
 
 	const $body = $(page.body);
@@ -84,6 +86,7 @@ frappe.pages["attendance-upload-control"].on_page_load = function (wrapper) {
 		$selectedFile.html(`
 			<p><strong>File name:</strong> ${frappe.utils.escape_html(state.file.file_name || "")}</p>
 			<p><strong>File URL:</strong> ${frappe.utils.escape_html(state.file.file_url || "")}</p>
+			<p><strong>Import batch:</strong> ${state.batch ? frappe.utils.escape_html(state.batch.name || "") : __("Not created yet")}</p>
 		`);
 	}
 
@@ -169,6 +172,7 @@ frappe.pages["attendance-upload-control"].on_page_load = function (wrapper) {
 			on_success(fileDoc) {
 				state.file = fileDoc;
 				state.preview = null;
+				state.batch = null;
 				renderSelectedFile();
 				$preview.html("<p>File uploaded. Click <strong>Preview Import</strong> to validate it.</p>");
 			},
@@ -209,14 +213,42 @@ frappe.pages["attendance-upload-control"].on_page_load = function (wrapper) {
 			freeze: true,
 			freeze_message: __("Creating attendance import batch..."),
 			callback(r) {
-				const batch = r.message || {};
-				if (batch.name) {
+				state.batch = r.message || null;
+				renderSelectedFile();
+				if (state.batch && state.batch.name) {
 					frappe.show_alert({
-						message: __("Import batch {0} created", [batch.name]),
+						message: __("Import batch {0} created", [state.batch.name]),
 						indicator: "green",
 					});
 					loadDashboard();
 				}
+			},
+		});
+	}
+
+	function processImportBatch() {
+		if (!state.batch || !state.batch.name) {
+			frappe.msgprint(__("Create an import batch before processing."));
+			return;
+		}
+
+		frappe.call({
+			method: "snrg_hr.api.attendance_upload.process_import_batch",
+			args: {
+				batch_name: state.batch.name,
+			},
+			freeze: true,
+			freeze_message: __("Creating employee checkins and recalculating attendance..."),
+			callback(r) {
+				const result = r.message || {};
+				frappe.show_alert({
+					message: __(
+						"Processed batch {0}: {1} checkins created, {2} rows skipped",
+						[result.batch_name, result.created_checkins || 0, result.skipped_rows || 0]
+					),
+					indicator: "green",
+				});
+				loadDashboard();
 			},
 		});
 	}
