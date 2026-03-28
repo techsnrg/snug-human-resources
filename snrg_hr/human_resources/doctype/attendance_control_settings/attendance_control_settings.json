@@ -1,0 +1,182 @@
+{
+ "actions": [],
+ "creation": "2026-03-29 10:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "attendance_memory_section",
+  "last_attendance_uploaded_till_date",
+  "next_pending_attendance_from_date",
+  "weekly_upload_day",
+  "pending_upload_alert_days",
+  "processing_policy_section",
+  "required_working_hours",
+  "short_hours_grace_minutes",
+  "allowed_late_count_per_month",
+  "allowed_short_hours_grace_count_per_month",
+  "duplicate_punch_threshold_minutes",
+  "backdated_import_limit_days",
+  "timing_policy_section",
+  "late_start_time",
+  "late_cutoff_time",
+  "correction_window_end_day_time",
+  "payroll_freeze_day",
+  "admin_override_role"
+ ],
+ "fields": [
+  {
+   "fieldname": "attendance_memory_section",
+   "fieldtype": "Section Break",
+   "label": "Attendance Memory"
+  },
+  {
+   "fieldname": "last_attendance_uploaded_till_date",
+   "fieldtype": "Date",
+   "label": "Last Attendance Uploaded Till Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "next_pending_attendance_from_date",
+   "fieldtype": "Date",
+   "label": "Next Pending Attendance From Date",
+   "read_only": 1
+  },
+  {
+   "default": "Saturday",
+   "fieldname": "weekly_upload_day",
+   "fieldtype": "Select",
+   "label": "Weekly Upload Day",
+   "options": "Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday",
+   "reqd": 1
+  },
+  {
+   "default": "7",
+   "fieldname": "pending_upload_alert_days",
+   "fieldtype": "Int",
+   "label": "Pending Upload Alert Days",
+   "reqd": 1
+  },
+  {
+   "fieldname": "processing_policy_section",
+   "fieldtype": "Section Break",
+   "label": "Processing Policy"
+  },
+  {
+   "default": "9",
+   "fieldname": "required_working_hours",
+   "fieldtype": "Float",
+   "label": "Required Working Hours",
+   "reqd": 1
+  },
+  {
+   "default": "30",
+   "fieldname": "short_hours_grace_minutes",
+   "fieldtype": "Int",
+   "label": "Short Hours Grace Minutes",
+   "reqd": 1
+  },
+  {
+   "default": "2",
+   "fieldname": "allowed_late_count_per_month",
+   "fieldtype": "Int",
+   "label": "Allowed Late Count Per Month",
+   "reqd": 1
+  },
+  {
+   "default": "2",
+   "fieldname": "allowed_short_hours_grace_count_per_month",
+   "fieldtype": "Int",
+   "label": "Allowed Short Hours Grace Count Per Month",
+   "reqd": 1
+  },
+  {
+   "default": "2",
+   "fieldname": "duplicate_punch_threshold_minutes",
+   "fieldtype": "Int",
+   "label": "Duplicate Punch Threshold Minutes",
+   "reqd": 1
+  },
+  {
+   "default": "31",
+   "fieldname": "backdated_import_limit_days",
+   "fieldtype": "Int",
+   "label": "Backdated Import Limit Days",
+   "reqd": 1
+  },
+  {
+   "fieldname": "timing_policy_section",
+   "fieldtype": "Section Break",
+   "label": "Timing Policy"
+  },
+  {
+   "default": "10:30:00",
+   "fieldname": "late_start_time",
+   "fieldtype": "Time",
+   "label": "Late Start Time",
+   "reqd": 1
+  },
+  {
+   "default": "11:00:00",
+   "fieldname": "late_cutoff_time",
+   "fieldtype": "Time",
+   "label": "Late Cutoff Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "correction_window_end_day_time",
+   "fieldtype": "Data",
+   "label": "Correction Window End Day and Time"
+  },
+  {
+   "default": "2",
+   "fieldname": "payroll_freeze_day",
+   "fieldtype": "Int",
+   "label": "Payroll Freeze Day",
+   "reqd": 1
+  },
+  {
+   "default": "System Manager",
+   "fieldname": "admin_override_role",
+   "fieldtype": "Link",
+   "label": "Admin Override Role",
+   "options": "Role",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-03-29 10:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Human Resources",
+ "name": "Attendance Control Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

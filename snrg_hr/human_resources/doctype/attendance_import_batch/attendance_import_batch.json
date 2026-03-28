@@ -1,0 +1,233 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-03-29 10:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "batch_overview_section",
+  "uploaded_by",
+  "uploaded_on",
+  "processing_status",
+  "source_file_name",
+  "source_file",
+  "remarks",
+  "date_coverage_section",
+  "file_date_from",
+  "file_date_to",
+  "suggested_pending_from_date",
+  "suggested_pending_to_date",
+  "last_attendance_covered_till_date",
+  "next_pending_attendance_from_date",
+  "validation_summary_section",
+  "total_rows",
+  "imported_rows",
+  "duplicate_rows",
+  "rejected_rows",
+  "unmatched_employee_rows",
+  "invalid_timestamp_rows",
+  "locked_period_rows",
+  "error_summary"
+ ],
+ "fields": [
+  {
+   "default": "AIB-.YYYY.-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "AIB-.YYYY.-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "batch_overview_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Overview"
+  },
+  {
+   "fieldname": "uploaded_by",
+   "fieldtype": "Link",
+   "label": "Uploaded By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "uploaded_on",
+   "fieldtype": "Datetime",
+   "label": "Uploaded On",
+   "read_only": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "processing_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Processing Status",
+   "options": "Draft\nValidated\nPartially Processed\nProcessed\nFailed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_file_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Source File Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_file",
+   "fieldtype": "Attach",
+   "label": "Source File"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "date_coverage_section",
+   "fieldtype": "Section Break",
+   "label": "Date Coverage"
+  },
+  {
+   "fieldname": "file_date_from",
+   "fieldtype": "Date",
+   "label": "File Date From"
+  },
+  {
+   "fieldname": "file_date_to",
+   "fieldtype": "Date",
+   "label": "File Date To"
+  },
+  {
+   "fieldname": "suggested_pending_from_date",
+   "fieldtype": "Date",
+   "label": "Suggested Pending From Date"
+  },
+  {
+   "fieldname": "suggested_pending_to_date",
+   "fieldtype": "Date",
+   "label": "Suggested Pending To Date"
+  },
+  {
+   "fieldname": "last_attendance_covered_till_date",
+   "fieldtype": "Date",
+   "label": "Last Attendance Covered Till Date"
+  },
+  {
+   "fieldname": "next_pending_attendance_from_date",
+   "fieldtype": "Date",
+   "label": "Next Pending Attendance From Date"
+  },
+  {
+   "fieldname": "validation_summary_section",
+   "fieldtype": "Section Break",
+   "label": "Validation Summary"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_rows",
+   "fieldtype": "Int",
+   "label": "Total Rows",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "imported_rows",
+   "fieldtype": "Int",
+   "label": "Imported Rows",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "duplicate_rows",
+   "fieldtype": "Int",
+   "label": "Duplicate Rows",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "rejected_rows",
+   "fieldtype": "Int",
+   "label": "Rejected Rows",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "unmatched_employee_rows",
+   "fieldtype": "Int",
+   "label": "Unmatched Employee Rows",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "invalid_timestamp_rows",
+   "fieldtype": "Int",
+   "label": "Invalid Timestamp Rows",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "locked_period_rows",
+   "fieldtype": "Int",
+   "label": "Locked Period Rows",
+   "read_only": 1
+  },
+  {
+   "fieldname": "error_summary",
+   "fieldtype": "Long Text",
+   "label": "Error Summary",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-03-29 10:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Human Resources",
+ "name": "Attendance Import Batch",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "source_file_name,processing_status",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "source_file_name",
+ "track_changes": 1
+}

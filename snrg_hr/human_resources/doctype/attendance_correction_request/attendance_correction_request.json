@@ -1,0 +1,199 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-03-29 10:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "request_details_section",
+  "employee",
+  "attendance_date",
+  "linked_attendance",
+  "linked_import_batch",
+  "current_status",
+  "requested_correction",
+  "reason",
+  "evidence_attachment",
+  "workflow_section",
+  "submitted_on",
+  "correction_deadline",
+  "approval_status",
+  "approved_by",
+  "final_decision",
+  "reprocessed_flag",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "default": "ACR-.YYYY.-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "ACR-.YYYY.-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "request_details_section",
+   "fieldtype": "Section Break",
+   "label": "Request Details"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "attendance_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Attendance Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "linked_attendance",
+   "fieldtype": "Link",
+   "label": "Linked Attendance",
+   "options": "Attendance"
+  },
+  {
+   "fieldname": "linked_import_batch",
+   "fieldtype": "Link",
+   "label": "Linked Import Batch",
+   "options": "Attendance Import Batch"
+  },
+  {
+   "fieldname": "current_status",
+   "fieldtype": "Select",
+   "label": "Current Status",
+   "options": "Present\nHalf Day\nAbsent\nOn Leave\nHoliday\nWeekly Off"
+  },
+  {
+   "fieldname": "requested_correction",
+   "fieldtype": "Small Text",
+   "label": "Requested Correction",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Long Text",
+   "label": "Reason",
+   "reqd": 1
+  },
+  {
+   "fieldname": "evidence_attachment",
+   "fieldtype": "Attach",
+   "label": "Evidence Attachment"
+  },
+  {
+   "fieldname": "workflow_section",
+   "fieldtype": "Section Break",
+   "label": "Workflow"
+  },
+  {
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Submitted On"
+  },
+  {
+   "fieldname": "correction_deadline",
+   "fieldtype": "Datetime",
+   "label": "Correction Deadline"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "approval_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Approval Status",
+   "options": "Draft\nSubmitted\nApproved\nRejected\nExpired",
+   "reqd": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User"
+  },
+  {
+   "fieldname": "final_decision",
+   "fieldtype": "Small Text",
+   "label": "Final Decision"
+  },
+  {
+   "default": "0",
+   "fieldname": "reprocessed_flag",
+   "fieldtype": "Check",
+   "label": "Reprocessed Flag"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Long Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-03-29 10:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Human Resources",
+ "name": "Attendance Correction Request",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Employee",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "employee,approval_status",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "employee",
+ "track_changes": 1
+}

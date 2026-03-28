@@ -1,0 +1,27 @@
+{
+ "content": null,
+ "creation": "2026-03-29 10:30:00.000000",
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2026-03-29 10:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Human Resources",
+ "name": "attendance-upload-control",
+ "owner": "Administrator",
+ "page_name": "attendance-upload-control",
+ "restrict_to_domain": null,
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "HR User"
+  }
+ ],
+ "standard": "Yes",
+ "system_page": 0,
+ "title": "Attendance Upload Control"
+}

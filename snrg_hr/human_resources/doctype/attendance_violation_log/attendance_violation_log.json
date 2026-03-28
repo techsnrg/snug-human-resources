@@ -1,0 +1,190 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-03-29 10:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "employee_details_section",
+  "employee",
+  "attendance_date",
+  "linked_attendance",
+  "linked_import_batch",
+  "attendance_metrics_section",
+  "first_in_time",
+  "last_out_time",
+  "working_hours",
+  "shift_start",
+  "late_minutes",
+  "shortfall_minutes",
+  "violation_section",
+  "violation_type",
+  "final_attendance_status",
+  "payroll_impact",
+  "is_manual_override",
+  "notes"
+ ],
+ "fields": [
+  {
+   "default": "AVL-.YYYY.-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "AVL-.YYYY.-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "employee_details_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Details"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "attendance_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Attendance Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "linked_attendance",
+   "fieldtype": "Link",
+   "label": "Linked Attendance",
+   "options": "Attendance"
+  },
+  {
+   "fieldname": "linked_import_batch",
+   "fieldtype": "Link",
+   "label": "Linked Import Batch",
+   "options": "Attendance Import Batch"
+  },
+  {
+   "fieldname": "attendance_metrics_section",
+   "fieldtype": "Section Break",
+   "label": "Attendance Metrics"
+  },
+  {
+   "fieldname": "first_in_time",
+   "fieldtype": "Datetime",
+   "label": "First In Time"
+  },
+  {
+   "fieldname": "last_out_time",
+   "fieldtype": "Datetime",
+   "label": "Last Out Time"
+  },
+  {
+   "fieldname": "working_hours",
+   "fieldtype": "Float",
+   "label": "Working Hours"
+  },
+  {
+   "fieldname": "shift_start",
+   "fieldtype": "Time",
+   "label": "Shift Start"
+  },
+  {
+   "fieldname": "late_minutes",
+   "fieldtype": "Int",
+   "label": "Late Minutes"
+  },
+  {
+   "fieldname": "shortfall_minutes",
+   "fieldtype": "Int",
+   "label": "Shortfall Minutes"
+  },
+  {
+   "fieldname": "violation_section",
+   "fieldtype": "Section Break",
+   "label": "Violation"
+  },
+  {
+   "fieldname": "violation_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Violation Type",
+   "options": "Late Entry\nThird Late Converted to Half Day\nAfter 11 AM Half Day\nShort Hours Grace Used\nShort Hours Grace Exhausted\nBelow Minimum Hours\nMissing Punch Assumed Shift End\nManual Override",
+   "reqd": 1
+  },
+  {
+   "fieldname": "final_attendance_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Final Attendance Status",
+   "options": "Present\nHalf Day\nAbsent\nOn Leave\nHoliday\nWeekly Off"
+  },
+  {
+   "fieldname": "payroll_impact",
+   "fieldtype": "Small Text",
+   "label": "Payroll Impact"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_manual_override",
+   "fieldtype": "Check",
+   "label": "Is Manual Override"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-03-29 10:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Human Resources",
+ "name": "Attendance Violation Log",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1
+  }
+ ],
+ "search_fields": "employee,violation_type",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "employee",
+ "track_changes": 1
+}

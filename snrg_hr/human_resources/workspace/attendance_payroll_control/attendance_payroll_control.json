@@ -1,0 +1,132 @@
+{
+ "category": "Modules",
+ "charts": [],
+ "content": "[{\"id\":\"apc_header_1\",\"type\":\"header\",\"data\":{\"text\":\"Attendance Import Control\",\"col\":12}},{\"id\":\"apc_shortcut_1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Upload Control\",\"col\":3}},{\"id\":\"apc_shortcut_2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Import Batch\",\"col\":3}},{\"id\":\"apc_shortcut_3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Control Settings\",\"col\":3}},{\"id\":\"apc_header_2\",\"type\":\"header\",\"data\":{\"text\":\"Attendance Exceptions\",\"col\":12}},{\"id\":\"apc_shortcut_4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Violation Log\",\"col\":3}},{\"id\":\"apc_shortcut_5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Correction Request\",\"col\":3}}]",
+ "creation": "2026-03-29 10:00:00.000000",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "doctype": "Workspace",
+ "extends": "",
+ "extends_another_page": 0,
+ "hide_custom": 0,
+ "icon": "users",
+ "is_default": 0,
+ "is_hidden": 0,
+ "label": "Attendance & Payroll Control",
+ "links": [
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Import Control",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Upload Control",
+   "link_count": 0,
+   "link_to": "attendance-upload-control",
+   "link_type": "Page",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Import Batch",
+   "link_count": 0,
+   "link_to": "Attendance Import Batch",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Control Settings",
+   "link_count": 0,
+   "link_to": "Attendance Control Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Exceptions",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Violation Log",
+   "link_count": 0,
+   "link_to": "Attendance Violation Log",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Correction Request",
+   "link_count": 0,
+   "link_to": "Attendance Correction Request",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-03-29 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Human Resources",
+ "name": "Attendance & Payroll Control",
+ "owner": "Administrator",
+ "public": 1,
+ "restrict_to_domain": "",
+ "roles": [],
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "label": "Attendance Upload Control",
+   "link_to": "attendance-upload-control",
+   "type": "Page"
+  },
+  {
+   "color": "Green",
+   "label": "Attendance Import Batch",
+   "link_to": "Attendance Import Batch",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "label": "Attendance Control Settings",
+   "link_to": "Attendance Control Settings",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "label": "Attendance Violation Log",
+   "link_to": "Attendance Violation Log",
+   "type": "DocType"
+  },
+  {
+   "color": "Purple",
+   "label": "Attendance Correction Request",
+   "link_to": "Attendance Correction Request",
+   "type": "DocType"
+  }
+ ],
+ "title": "Attendance & Payroll Control"
+}
